@@ -1,16 +1,98 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>My Book List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    h1 span {
+      color: #007bff;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .delete {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+
+  <div class="container">
+    <h1>My<span>Book</span>List</h1>
+
+    <div class="form-group">
+      <input type="text" id="title" class="form-control mb-2" placeholder="Title">
+      <input type="text" id="author" class="form-control mb-2" placeholder="Author">
+      <input type="text" id="isbn" class="form-control mb-2" placeholder="ISBN#">
+      <button id="submit" class="btn btn-primary">Add Book</button>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN#</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="book-list">
+        <!-- New rows will appear here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('submit').addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const isbn = document.getElementById('isbn').value.trim();
+
+      if (title === '' || author === '' || isbn === '') {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      const list = document.getElementById('book-list');
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${title}</td>
+        <td>${author}</td>
+        <td>${isbn}</td>
+        <td><button class="delete">X</button></td>
+      `;
+
+      list.appendChild(row);
+
+      // Clear input fields
+      document.getElementById('title').value = '';
+      document.getElementById('author').value = '';
+      document.getElementById('isbn').value = '';
+    });
+
+    // Event delegation to handle delete buttons
+    document.getElementById('book-list').addEventListener('click', function (e) {
+      if (e.target.classList.contains('delete')) {
+        e.target.parentElement.parentElement.remove();
+      }
+    });
+  </script>
 
 </body>
-
 </html>
+
